@@ -1,4 +1,3 @@
-/* styles.css or home.component.css */
 html,
 body {
     margin: 0;
@@ -18,7 +17,7 @@ body {
     font-size: 3rem;
     color: white;
     cursor: pointer;
-    z-index: 2;
+    z-index: 1;
     animation: bounce 2s infinite;
 }
 
@@ -142,6 +141,10 @@ p {
 }
 
 @media (min-width: 768px) {
+    .logo {
+        width: 1000px;
+    }
+    
     .content-container {
         flex-direction: row;
         justify-content: space-between;
@@ -160,6 +163,31 @@ p {
     }
 }
 
+@media (max-width: 768px) {
+    .logo {
+        width: 50vw;
+        max-width: 250px;
+    }
+
+    .logo-container {
+        top: -10%;
+    }
+
+    .text-container {
+        transform: translate(-50%, 150%);
+    }
+
+    .phone-image {
+        width: 50vw;
+        height: auto;
+    }
+
+    .cta-button {
+        padding: 3vw 6vw;
+        font-size: 4vw;
+        bottom: 150%;
+    }
+}
 /* Initial state */
 .features-container.row {
     opacity: 0;

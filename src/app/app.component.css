@@ -89,7 +89,7 @@
     position: absolute;
     top: 60px;
     width: 100%;
-    z-index: 1;
+    z-index: 7;
 }
 
 .mobile-menu a {
@@ -107,9 +107,11 @@
 @media (max-width: 768px) {
     .navbar-container {
         display: none;
+        z-index: 3;
     }
 
     .hamburger {
         display: flex;
+        z-index: 3;
     }
 }
