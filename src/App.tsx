@@ -9,11 +9,13 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import TermsOfService from './components/TermsOfService';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import LoadingScreen from './components/LoadingScreen';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState<'main' | 'terms' | 'privacy'>('main');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,6 +41,10 @@ function App() {
     window.location.href = 'https://admin.wehanda.com';
   };
 
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+  };
+
   const renderContent = () => {
     switch (currentPage) {
       case 'terms':
@@ -60,72 +66,83 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm' : 'bg-transparent'
-      }`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <div className="flex items-center">
-              <img 
-                src="https://jaytpfztifhtzcruxguj.supabase.co/storage/v1/object/public/wehanda//WEHANDA%20FINAL%202%20copy.png" 
-                alt="Wehanda Logo" 
-                className="h-8 w-auto cursor-pointer hover-scale"
-                onClick={() => setCurrentPage('main')}
-              />
-            </div>
-            
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
-              <a href="#about" className="text-gray-800 hover:text-[#037ffc] transition-colors hover-lift">About</a>
-              <a href="#features" className="text-gray-800 hover:text-[#037ffc] transition-colors hover-lift">Features</a>
-              <a href="#pricing" className="text-gray-800 hover:text-[#037ffc] transition-colors hover-lift">Pricing</a>
-              <a href="#contact" className="text-gray-800 hover:text-[#037ffc] transition-colors hover-lift">Contact</a>
-              <button 
-                onClick={handleLogin}
-                className="bg-[#037ffc] text-white px-6 py-2 rounded-full hover:bg-[#0265ca] transition-all hover-lift"
-              >
-                Login
-              </button>
-            </div>
+    <>
+      {isLoading ? (
+        <LoadingScreen onLoadingComplete={handleLoadingComplete} />
+      ) : (
+        <>
+          <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 pt-4">
+            {/* Navigation */}
+            <nav className={`max-w-7xl mx-auto rounded-full transition-all duration-300 ${
+              isScrolled 
+                ? 'bg-white/90 backdrop-blur-md shadow-lg' 
+                : 'bg-white/50 backdrop-blur-sm'
+            }`}>
+              <div className="px-4 sm:px-6 lg:px-8">
+                <div className="flex justify-between items-center h-16">
+                  <div className="flex items-center">
+                    <img 
+                      src="https://jaytpfztifhtzcruxguj.supabase.co/storage/v1/object/public/wehanda//WEHANDA%20FINAL%202%20copy.png" 
+                      alt="Wehanda Logo" 
+                      className="h-8 w-auto cursor-pointer hover-scale"
+                      onClick={() => setCurrentPage('main')}
+                    />
+                  </div>
+                  
+                  {/* Desktop Navigation */}
+                  <div className="hidden md:flex items-center space-x-8">
+                    <a href="#about" className="text-gray-800 hover:text-[#037ffc] transition-colors hover-lift">About</a>
+                    <a href="#features" className="text-gray-800 hover:text-[#037ffc] transition-colors hover-lift">Features</a>
+                    <a href="#pricing" className="text-gray-800 hover:text-[#037ffc] transition-colors hover-lift">Pricing</a>
+                    <a href="#contact" className="text-gray-800 hover:text-[#037ffc] transition-colors hover-lift">Contact</a>
+                    <button 
+                      onClick={handleLogin}
+                      className="bg-[#037ffc] text-white px-6 py-2 rounded-full hover:bg-[#0265ca] transition-all hover-lift"
+                    >
+                      Login
+                    </button>
+                  </div>
 
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="text-gray-600 hover:text-gray-900 focus:outline-none"
-              >
-                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-              </button>
-            </div>
+                  {/* Mobile menu button */}
+                  <div className="md:hidden">
+                    <button
+                      onClick={() => setIsMenuOpen(!isMenuOpen)}
+                      className="text-gray-600 hover:text-gray-900 focus:outline-none"
+                    >
+                      {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mobile Navigation */}
+              {isMenuOpen && (
+                <div className="md:hidden bg-white/90 backdrop-blur-md rounded-b-3xl mt-1 border-t border-gray-100 animate-fade-in">
+                  <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a href="#about" className="block px-3 py-2 text-gray-600 hover:text-[#037ffc] hover-lift">About</a>
+                    <a href="#features" className="block px-3 py-2 text-gray-600 hover:text-[#037ffc] hover-lift">Features</a>
+                    <a href="#pricing" className="block px-3 py-2 text-gray-600 hover:text-[#037ffc] hover-lift">Pricing</a>
+                    <a href="#contact" className="block px-3 py-2 text-gray-600 hover:text-[#037ffc] hover-lift">Contact</a>
+                    <button 
+                      onClick={handleLogin}
+                      className="w-full mt-4 mb-2 bg-[#037ffc] text-white px-6 py-2 rounded-full hover:bg-[#0265ca] transition-all hover-lift"
+                    >
+                      Login
+                    </button>
+                  </div>
+                </div>
+              )}
+            </nav>
+          </header>
+          <div>
+            <main>
+              {renderContent()}
+              <Footer setCurrentPage={setCurrentPage} />
+            </main>
           </div>
-        </div>
-
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden bg-white border-t border-gray-100 animate-fade-in">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              <a href="#about" className="block px-3 py-2 text-gray-600 hover:text-[#037ffc] hover-lift">About</a>
-              <a href="#features" className="block px-3 py-2 text-gray-600 hover:text-[#037ffc] hover-lift">Features</a>
-              <a href="#pricing" className="block px-3 py-2 text-gray-600 hover:text-[#037ffc] hover-lift">Pricing</a>
-              <a href="#contact" className="block px-3 py-2 text-gray-600 hover:text-[#037ffc] hover-lift">Contact</a>
-              <button 
-                onClick={handleLogin}
-                className="w-full mt-4 bg-[#037ffc] text-white px-6 py-2 rounded-full hover:bg-[#0265ca] transition-all hover-lift"
-              >
-                Login
-              </button>
-            </div>
-          </div>
-        )}
-      </nav>
-
-      <main>
-        {renderContent()}
-        <Footer setCurrentPage={setCurrentPage} />
-      </main>
-    </div>
+        </>
+      )}
+    </>
   );
 }
 

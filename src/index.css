@@ -24,6 +24,48 @@
   .btn-secondary {
     @apply bg-[#037ffc]/10 text-[#037ffc] hover:bg-[#037ffc]/20;
   }
+
+  /* Navigation Styles */
+  .nav-link {
+    @apply text-gray-800 hover:text-[#037ffc] transition-all duration-300 relative;
+  }
+
+  .nav-link::after {
+    content: '';
+    @apply absolute left-0 bottom-[-4px] w-0 h-0.5 bg-[#037ffc] transition-all duration-300;
+  }
+
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+
+  .nav-button {
+    @apply bg-[#037ffc] text-white px-6 py-2 rounded-full transition-all duration-300 hover:bg-[#0265ca] transform hover:scale-105 hover:shadow-lg hover:shadow-[#037ffc]/20;
+  }
+
+  .mobile-nav-link {
+    @apply block px-3 py-2 text-gray-600 hover:text-[#037ffc] hover:bg-[#037ffc]/5 rounded-lg transition-all duration-300;
+  }
+
+  /* Sticky Navigation */
+  .sticky-nav {
+    @apply fixed top-0 left-0 right-0 z-[9999] backdrop-blur-lg;
+  }
+}
+
+/* Loading Animation */
+@keyframes steam {
+  0% {
+    transform: translateY(0) translateX(-50%) scale(0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-20px) translateX(-50%) scale(1);
+    opacity: 0;
+  }
 }
 
 /* Animations */
@@ -139,18 +181,6 @@
 /* Custom Styles */
 .hero-gradient {
   background: linear-gradient(135deg, #FFF8F5 0%, #FFF 100%);
-}
-
-/* Scroll Reveal */
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.6s ease-in-out;
-}
-
-.reveal.active {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 /* Background Patterns */
