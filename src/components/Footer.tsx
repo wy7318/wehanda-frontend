@@ -79,22 +79,16 @@ const Footer: React.FC<FooterProps> = ({ setCurrentPage, navigateToBlog }) => {
 
               {/* Contact Details */}
               <div className="mt-8 space-y-4">
-                <a href="mailto:info@wehanda.com" className="flex items-center text-blue-200 hover:text-white transition-colors duration-300 group">
+                <a href="mailto:matt.lee@sumisubi.com" className="flex items-center text-blue-200 hover:text-white transition-colors duration-300 group">
                   <div className="p-2 bg-blue-800/50 rounded-full mr-3 group-hover:bg-blue-700 transition-colors">
                     <Mail className="h-4 w-4" />
                   </div>
-                  <span>info@wehanda.com</span>
-                </a>
-                <a href="tel:+19999999999" className="flex items-center text-blue-200 hover:text-white transition-colors duration-300 group">
-                  <div className="p-2 bg-blue-800/50 rounded-full mr-3 group-hover:bg-blue-700 transition-colors">
-                    <Phone className="h-4 w-4" />
-                  </div>
-                  <span>+1 (999) 999-9999</span>
+                  <span>matt.lee@sumisubi.com</span>
                 </a>
               </div>
 
               {/* Social Icons */}
-              <div className="flex space-x-3 mt-6">
+              {/* <div className="flex space-x-3 mt-6">
                 <a href="#twitter" className="p-2 bg-blue-700 hover:bg-blue-600 rounded-full transition-all duration-300 hover:scale-110 text-white">
                   <Twitter className="h-5 w-5" />
                 </a>
@@ -107,7 +101,7 @@ const Footer: React.FC<FooterProps> = ({ setCurrentPage, navigateToBlog }) => {
                 <a href="#linkedin" className="p-2 bg-blue-700 hover:bg-blue-600 rounded-full transition-all duration-300 hover:scale-110 text-white">
                   <Linkedin className="h-5 w-5" />
                 </a>
-              </div>
+              </div> */}
             </div>
 
             <div className="border-t md:border-t-0 md:border-l border-blue-700/50 pl-0 md:pl-12 pt-6 md:pt-0"></div>
@@ -186,8 +180,17 @@ const Footer: React.FC<FooterProps> = ({ setCurrentPage, navigateToBlog }) => {
           {/* Bottom bar with copyright */}
           <div className="pt-8 border-t border-blue-700/50 flex flex-col md:flex-row justify-between items-center">
             <p className="text-blue-200">
-              &copy; {new Date().getFullYear()} Wehanda. All rights reserved.
+              &copy; {new Date().getFullYear()} Wehanda. All rights reserved. Designed by{' '}
+              <a
+                href="https://www.sumisubi.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-blue-400"
+              >
+                Sumiland Design
+              </a>
             </p>
+
             <div className="mt-4 md:mt-0 flex items-center space-x-2 text-blue-200">
               <span>Made with</span>
               <Heart className="h-4 w-4 text-red-400 animate-pulse" fill="#F87171" />
