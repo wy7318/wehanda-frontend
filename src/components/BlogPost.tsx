@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { supabase } from '../lib/supabase';
 import type { Post } from '../types/database';
 import { Calendar, ArrowLeft, Clock, Tag, Share2, BookOpen, ChevronLeft, ChevronRight, Heart, MessageCircle } from 'lucide-react';
+// Import our new component
+import { RichTextContent } from './RichTextContent';
 
 // Updated organization ID for this website
 const ORGANIZATION_ID = '1e5c0f75-394e-4985-aeb9-c189b1ee7c4b';
@@ -13,6 +15,7 @@ interface BlogPostProps {
 }
 
 export default function BlogPost({ slug, navigateToBlog }: BlogPostProps) {
+    // Existing state and refs
     const [post, setPost] = useState<Post | null>(null);
     const [relatedPosts, setRelatedPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
@@ -21,6 +24,7 @@ export default function BlogPost({ slug, navigateToBlog }: BlogPostProps) {
     const [isShareOpen, setIsShareOpen] = useState(false);
     const contentRef = useRef<HTMLDivElement>(null);
 
+    // Existing useEffect and functions
     useEffect(() => {
         if (slug) {
             fetchPost();
@@ -98,7 +102,8 @@ export default function BlogPost({ slug, navigateToBlog }: BlogPostProps) {
         if (!content) return '1 min read';
 
         const wordsPerMinute = 200;
-        const words = content.split(/\s+/).length;
+        const textContent = content.replace(/<[^>]*>/g, ''); // Strip HTML tags
+        const words = textContent.split(/\s+/).length;
         const minutes = Math.max(1, Math.ceil(words / wordsPerMinute));
         return `${minutes} min read`;
     }
@@ -292,9 +297,10 @@ export default function BlogPost({ slug, navigateToBlog }: BlogPostProps) {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.3 }}
-                        className="prose prose-lg max-w-none"
-                        dangerouslySetInnerHTML={{ __html: post.content }}
-                    />
+                    >
+                        {/* Replace the direct dangerouslySetInnerHTML with our RichTextContent component */}
+                        <RichTextContent content={post.content} />
+                    </motion.div>
 
                     {/* Action bar */}
                     <div className="mt-12 pt-8 border-t border-gray-100 flex flex-wrap justify-between items-center">
@@ -302,8 +308,8 @@ export default function BlogPost({ slug, navigateToBlog }: BlogPostProps) {
                             <button
                                 onClick={() => setLiked(!liked)}
                                 className={`flex items-center gap-2 px-4 py-2 rounded-full transition-colors ${liked
-                                        ? 'bg-red-50 text-red-500'
-                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                                    ? 'bg-red-50 text-red-500'
+                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                     }`}
                             >
                                 <Heart className={`h-5 w-5 ${liked ? 'fill-current' : ''}`} />
@@ -353,7 +359,7 @@ export default function BlogPost({ slug, navigateToBlog }: BlogPostProps) {
                                         // Navigate to the related post
                                         setPost(null);
                                         setLoading(true);
-                                        slug = relatedPost.slug;
+                                        window.history.pushState({}, '', `/blog/${relatedPost.slug}`);
                                         fetchPost();
                                     }}
                                 >
