@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, MessageSquare, Loader2, CheckCircle, AlertCircle, Send, ArrowRight, Star, Users, Gift, Clock, Heart } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import ReCAPTCHA from 'react-google-recaptcha';
+
 
 const Contact = () => {
   const [formState, setFormState] = useState({
@@ -16,6 +18,9 @@ const Contact = () => {
   const [focusedField, setFocusedField] = useState(null);
   const [formProgress, setFormProgress] = useState(0);
   const [isHoveringButton, setIsHoveringButton] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState(null);
+  const captcha_key = import.meta.env.VITE_YOUR_RECAPTCHA_SITE_KEY
+
 
   // Calculate form progress
   useEffect(() => {
@@ -51,7 +56,16 @@ const Contact = () => {
     setLoading(true);
     setError(null);
 
+    
+
     try {
+
+      if (!captchaToken) {
+        setError('Please verify you are human.');
+        setLoading(false);
+        return;
+      }
+
       const nameParts = formState.name.trim().split(' ');
       const firstName = nameParts[0] || '';
       const lastName = nameParts.slice(1).join(' ') || '';
@@ -435,6 +449,15 @@ const Contact = () => {
                       .
                     </label>
                   </div>
+
+                  <div className="my-4">
+                    <ReCAPTCHA
+                      sitekey= {captcha_key}
+                      onChange={(token) => setCaptchaToken(token)}
+                      onExpired={() => setCaptchaToken(null)}
+                    />
+                  </div>
+
 
                   <button
                     type="submit"
